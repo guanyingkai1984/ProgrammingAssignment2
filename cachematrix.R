@@ -1,15 +1,49 @@
-## Put comments here that give an overall description of what your
-## functions do
+##library(MASS) is used to calculate inverse of matrices using function ginv()
+library(MASS)
 
-## Write a short comment describing this function
+## First Function makeCacheMatrix
 
-makeCacheMatrix <- function(x = matrix()) {
-
+makeCacheMatrix <- function(x = matrix()) 
+{
+  #initializing inverse as NULL  
+  inv<-NULL            
+  set<-function(y){
+    x<<-y
+    inv<<-NULL
+  }
+  #function to get matrix x
+  get<-function()x             
+  setinv<-function(inverse)inv<<-inverse
+  getinv<-function(){ 
+    #function to obtain inverse of the matrix
+    inver<-ginv(x)
+    inver%*%x           
+  }
+  list(set = set, 
+       get = get, 
+       setinv = setinv, 
+       getinv = getinv)
 }
 
 
-## Write a short comment describing this function
+##This is used to get the cache data
 
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+#gets cache data 
+cacheSolve <- function(x, ...)      
+{
+  inv<-x$getinv()
+  #checking whether inverse is NUll  
+  if(!is.null(inv))
+    {                  
+    message("getting cached data!")
+    #returns inverse value
+    return(inv)                       
+    }
+  
+  data<-x$get()
+  #calculates inverse value
+  inv<-solve(data,...)              
+  x$setinv(inv)
+  # Return a matrix that is the inverse of 'x'
+  inv   
 }
