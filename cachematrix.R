@@ -16,8 +16,8 @@ makeCacheMatrix <- function(x = matrix())
   setinv<-function(inverse)inv<<-inverse
   getinv<-function(){ 
     #function to obtain inverse of the matrix
-    inver<-ginv(x)
-    inver%*%x           
+    inv<-ginv(x)
+      
   }
   list(set = set, 
        get = get, 
